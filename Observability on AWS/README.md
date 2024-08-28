@@ -332,5 +332,54 @@ This Systems Manager capability is supported as both an event type and a target 
 |Learn more about State Manager|[About State Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-about.html)|
 |Create and assign a State Manager association to your nodes|[Working with associations in Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-associations.html)|
 
+### Compliance
+Compliance, a capability of AWS Systems Manager, collects and reports data about the status of patching in Patch Manager patching and associations in State Manager. (Patch Manager and State Manager are also both capabilities of AWS Systems Manager.) Compliance also reports on custom compliance types you have specified for your managed nodes. This section includes details about each of these compliance types and how to view Systems Manager compliance data. This section also includes information about how to view compliance history and change tracking.
+
+#### About patch compliance
+
+After you use Patch Manager to install patches on your instances, compliance status information is immediately available to you in the console or in response to AWS Command Line Interface (AWS CLI) commands or corresponding Systems Manager API operations.
+
+#### About State Manager association compliance
+
+After you create one or more State Manager associations, compliance status information is immediately available to you in the console or in response to AWS CLI commands or corresponding Systems Manager API operations. For associations, Compliance shows statuses of Compliant or Non-compliant and the severity level assigned to the association, such as Critical or Medium.
+
+#### About custom compliance
+
+You can assign compliance metadata to a managed node. This metadata can then be aggregated with other compliance data for compliance reporting purposes. For example, say that your business runs versions 2.0, 3.0, and 4.0 of software X on your managed nodes. The company wants to standardize on version 4.0, meaning that instances running versions 2.0 and 3.0 are non-compliant. You can use the PutComplianceItems API operation to explicitly note which managed nodes are running older versions of software X. You can only assign compliance metadata by using the AWS CLI, AWS Tools for Windows PowerShell, or the SDKs. The following CLI sample command assigns compliance metadata to a managed instance and specifies the compliance type in the required format Custom:. Replace each example resource placeholder with your own information.
+
+
+#### Linux & macOS
+```Text
+aws ssm put-compliance-items \
+    --resource-id i-1234567890abcdef0 \
+    --resource-type ManagedInstance \
+    --compliance-type Custom:SoftwareXCheck \
+    --execution-summary ExecutionTime=AnyStringToDenoteTimeOrDate \
+    --items Id=Version2.0,Title=SoftwareXVersion,Severity=CRITICAL,Status=NON_COMPLIANT
+```
+#### windows
+```Text
+aws ssm put-compliance-items ^
+    --resource-id i-1234567890abcdef0 ^
+    --resource-type ManagedInstance ^
+    --compliance-type Custom:SoftwareXCheck ^
+    --execution-summary ExecutionTime=AnyStringToDenoteTimeOrDate ^
+    --items Id=Version2.0,Title=SoftwareXVersion,Severity=CRITICAL,Status=NON_COMPLIANT
+```
+Compliance managers can then view summaries or create reports about which managed nodes are or aren't compliant. You can assign a maximum of 10 different custom compliance types to a managed node.
+
+#### Viewing current compliance data
+
+This section describes how to view compliance data in the Systems Manager console and by using the AWS CLI.
+
+#### Viewing current compliance data (console)
+1. Open the AWS Systems Manager console at [](https://console.aws.amazon.com/systems-manager/).
+2. In the navigation pane, choose **Compliance**.
+3. In the **Compliance dashboard filtering** section, choose an option to filter compliance data. The **Compliance resources summary** section displays counts of compliance data based on the filter you chose.
+4. To drill down into a resource for more information, scroll down to the **Details overview for resources** area and choose the ID of a managed node.
+5. On the **Instance ID** or **Name** details page, choose the **Configuration compliance** tab to view a detailed configuration compliance report for the managed node.
+
+
+
 
 
