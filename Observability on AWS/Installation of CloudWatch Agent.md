@@ -17,3 +17,4 @@
 **Step-4:** Report Compliance
 
 ## Installation of the CloudWatch agent demonstration 
+https://github.com/user-attachments/assets/4bee1fa1-b9c8-460b-998e-45d8f60fdb7c
