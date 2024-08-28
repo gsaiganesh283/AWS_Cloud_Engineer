@@ -379,6 +379,48 @@ This section describes how to view compliance data in the Systems Manager consol
 4. To drill down into a resource for more information, scroll down to the **Details overview for resources** area and choose the ID of a managed node.
 5. On the **Instance ID** or **Name** details page, choose the **Configuration compliance** tab to view a detailed configuration compliance report for the managed node.
 
+## Configuring the CloudWatch Agent
+### CloudWatch agent logs configuration
+In this lesson, you will learn how to configure the CloudWatch agent to collect metrics and logs from the EC2 instances in your application. Review the following two examples to learn the benefits of configurations.
+
+In this example, we **collect three log files** from our web server: Apache access logs, Apache error logs, and Hypertext Preprocessor (PHP) error logs. We have defined the log file to collect logs from (file_path), the log group name (log_group_name), and the log stream name (log_stream_name) in the configuration file.
+
+The CloudWatch agent collects logs from these log files. It sends them to a log stream named after the instance ID defined in the configured log stream name.
+
+![image](https://github.com/user-attachments/assets/a2f8847b-6a9c-4c0a-bc3f-bc37402f114d)
+
+Three log files collected from the web server: Apache access logs, Apache error logs, and PHP error logs.
+
+In this example, we collect **memory used percentage as a metric** with the dimensions of instance ID and instance type. We add this metric to an aggregation of instance types. 
+
+We can view memory used in CloudWatch metrics and filter by instance ID or instance type. We also have an aggregated view of memory used across all instances, filtered by instance type.
+
+Adding more dimensions **increases analysis capability** and **overall costs** because each metric and unique dimension value combination results in a new metric.
+
+
+![image](https://github.com/user-attachments/assets/a64ebc70-d267-4c33-a455-14208c1e0b77)
+
+**Memory collected using a percentage as a metric** with the dimensions of instance ID and instance type.
+
+**[CloudWatch agent configuration](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/create-cloudwatch-agent-configuration-file-wizard.html)**
+
+**[Manually create or edit the configuration file](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Agent-Configuration-File-Details.html)**
+
+#### Configure the CloudWatch Agent Demonstration
+https://github.com/user-attachments/assets/3b398000-f0e6-44dc-b777-1bae7a8eac2f
+
+### Metrics collected by the CloudWatch agent
+You can collect metrics from servers by installing the CloudWatch agent on the server. You can install the agent on both Amazon EC2 instances and on-premises servers, and on computers running either Linux, Windows Server, or macOS. If you install the agent on an Amazon EC2 instance, the metrics it collects are in addition to the metrics enabled by default on Amazon EC2 instances.
+
+#### Metrics collected by the CloudWatch agent on Windows Server instances
+On a server running Windows Server, installing the CloudWatch agent enables you to collect the metrics associated with the counters in Windows Performance Monitor. The CloudWatch metric names for these counters are created by putting a space between the object name and the counter name. For example, the % Interrupt Time counter of the Processor object is given the metric name Processor % Interrupt Time in CloudWatch. For more information about Windows Performance Monitor counters, see the Microsoft Windows Server documentation.
+
+
+The default namespace for metrics collected by the CloudWatch agent is CWAgent, although you can specify a different namespace when you configure the agent.
+
+**[Metrics collected by the CloudWatch agent on Linux and macOS instances](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/metrics-collected-by-CloudWatch-agent.html)**
+
+
 
 
 
